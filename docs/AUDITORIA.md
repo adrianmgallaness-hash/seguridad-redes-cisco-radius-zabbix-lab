@@ -1,34 +1,28 @@
-# Auditoría de hardening: informe inicial y seguimiento
+# Auditoría de hardening: línea base y revisión posterior
 
-## Trabajo realizado
+El auditor solo lee configuraciones exportadas y escribe reportes; no se conecta al router ni aplica reglas. Evalúa 16 controles seleccionados relacionados con hardening/CIS, sin certificación ni porcentaje oficial.
 
-Se ejecutó [audit_cis.py](../scripts/audit_cis.py) sobre la [configuración sanitizada aportada de R-2139](../configs/R-2139-running-config.sanitized.cfg). El [reporte inicial](../reportes/informe-cis-R-2139.md) contiene **16 controles seleccionados: 7 conformes y 9 hallazgos**.
+| Momento | Entrada | Resultado |
+|---|---|---|
+| Antes de RADIUS | [Línea base](../configs/historico/R-2139-pre-radius.sanitized.cfg) | [Informe inicial](../reportes/informe-cis-R-2139.md): 7 conformes, 9 hallazgos |
+| Después de RADIUS | [Exportación final](../configs/R-2139-running-config.sanitized.cfg) | [Informe posterior](../reportes/informe-cis-R-2139-post-radius.md): 8 conformes, 8 hallazgos |
 
-La revisión es estática y de solo lectura respecto de la configuración. El programa escribe el reporte, no se conecta al router ni aplica reglas. Los resultados no son una puntuación oficial CIS.
+Se conservó intacto el reporte inicial y se verificó que es reproducible con su entrada histórica. La mejora del control AAA corresponde a la configuración RADIUS realmente aplicada y al nuevo running-config aportado; no se modificaron resultados para aparentar cumplimiento.
 
 ## Reproducción
 
-Desde la raíz del repositorio, con Python 3.10 o posterior:
+Desde la raíz del repositorio:
 
 ```bash
-python scripts/audit_cis.py configs/R-2139-running-config.sanitized.cfg --output reportes/informe-cis-R-2139.md
+python scripts/audit_cis.py configs/historico/R-2139-pre-radius.sanitized.cfg --output reportes/informe-cis-R-2139.md
+python scripts/audit_cis.py configs/R-2139-running-config.sanitized.cfg --output reportes/informe-cis-R-2139-post-radius.md
 python -m unittest discover -s scripts -p "test_*.py"
 ```
 
-## Interpretación de los hallazgos
+## Límites y hallazgos conservados
 
-El archivo evaluado contiene AAA deshabilitado, consola/AUX sin expiración y privilegio 15 explícito, hashes tipo 5 (valores ocultos), VTY sin ACL de entrada, SNMP permitido para toda la LAN y ausencia de destino syslog remoto.
+Consola/AUX siguen sin expiración y con privilegio 15 explícito, existen hashes tipo 5 (valores ocultos), VTY carece de ACL de origen, SNMP permite toda la LAN y no se identifica un destino syslog remoto. No se aplicaron reglas adicionales para eliminar esos hallazgos.
 
-Los controles conformes incluyen SSHv2, VTY exclusivamente SSH, servicios HTTP/HTTPS deshabilitados, timeout VTY, comunidades SNMP de solo lectura y Fa0/1 apagada.
+El control AAA del auditor detecta la directiva global. La prueba funcional separada es la [sesión SSH de nivel 5](../imagenes/parcial/SSH-R-2139-usuario-n5-nivel5.png) y el [evento NPS 6272](../evidencias/parcial/NPS-6272-R-2139-usuario-n5.txt). No se presenta una comprobación estática como sustituto del ensayo de autenticación.
 
-Encontrar estos problemas es parte del análisis inicial. No se sustituyen por resultados conformes sin una nueva configuración que los sustente.
-
-## Si cambia la configuración
-
-Conservar este informe como línea base. Después de aplicar y verificar cambios autorizados —por ejemplo, la incorporación de RADIUS— exportar otra copia sanitizada y generar un segundo informe con otro nombre:
-
-```bash
-python scripts/audit_cis.py configs/R-2139-post-cambios.sanitized.cfg --output reportes/informe-cis-R-2139-post-cambios.md
-```
-
-Los archivos posteriores del ejemplo solo deben crearse a partir de una exportación real. No se han recibido ni publicado todavía. Si el enunciado exige analizar sin aplicar hardening, el informe inicial responde a ese alcance; no se modifica el equipo para forzar un resultado perfecto.
+El informe evalúa el router, no el switch. No comprueba la fortaleza real de contraseñas ni certifica el conjunto de recomendaciones CIS.

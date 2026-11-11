@@ -21,7 +21,7 @@ Las capturas AD/NPS y las capturas Zabbix anteriores se conservan como anteceden
 - [Port-security antes del ensayo](parcial/port-security-verificacion.txt): transcripción de consultas, contador cero y sin coincidencias en el filtro de logs.
 - [Violación real en Gi0/3](parcial/port-security-violacion-Gi0-3.txt): transcripción posterior aportada por el autor; contador 1, Secure-shutdown/err-disabled, MAC 0221.3900.0002 y registros PSECURE_VIOLATION/ERR_DISABLE. Esta salida sí acredita la violación. La recuperación está acreditada en la nueva salida y captura.
 
-La nueva exportación del router sigue mostrando `no aaa new-model`. La respuesta ICMP de .10 no confirma por sí sola que sea el servidor NPS.
+La exportación anterior del router mostraba `no aaa new-model` y se conserva como línea base histórica. La exportación final ya contiene AAA y el evento 6272 recibido confirma a NPS .10 como servidor del acceso actual.
 
 ## Capturas de violación y recuperación
 
@@ -47,3 +47,13 @@ Las capturas no son eventos de autenticación. No se atribuye una política efec
 ## Router registrado en NPS
 
 [Captura del alta de R-2139](../imagenes/parcial/NPS-R-2139-registrado.png): dirección 10.21.39.1, Enabled True, después del alta y reinicio de IAS. La entrada del secreto está enmascarada. La captura acredita el registro del cliente, no todavía una autenticación aceptada desde el router.
+
+## SSH y RADIUS verificados en R-2139
+
+- [Sesión SSH actual](../imagenes/parcial/SSH-R-2139-usuario-n5-nivel5.png): usuario-n5, nivel 5, VTY 0, origen .101.
+- [AAA y VTY aplicados](../imagenes/parcial/R-2139-AAA-VTY-conectividad.png): listas RADIUS y ping 5/5 a NPS.
+- [NPS, puertos, firewall y auditoría](../imagenes/parcial/NPS-puertos-firewall-auditoria.png): servicio activo, regla limitada a .1/.2 y registro habilitado.
+- [Evento NPS 6272](parcial/NPS-6272-R-2139-usuario-n5.txt): transcripción real de aceptación, cliente .1 y política LAB2139-Nivel5.
+- [Configuración guardada](parcial/R-2139-guardado-configuracion.txt): respuesta [OK] aportada por el autor.
+
+No se publican capturas de restablecimiento que contengan contraseñas en claro. La prueba actual del switch sigue pendiente; las sesiones antiguas no se utilizan para acreditarla.

@@ -14,7 +14,7 @@ Laboratorio desarrollado en GNS3 y VMware. Reúne la configuración exportada de
 | Configuraciones públicas | [Router y switch](configs/README.md) |
 | Pruebas y alcance de los resultados | [Matriz de validación](docs/PRUEBAS.md) |
 | Capturas y transcripciones | [Evidencias](evidencias/README.md) |
-| Análisis estático de hardening | [Informe generado](reportes/informe-cis-R-2139.md) |
+| Análisis estático de hardening | [Informe inicial](reportes/informe-cis-R-2139.md) · [Después de RADIUS](reportes/informe-cis-R-2139-post-radius.md) |
 | Herramienta y reproducción | [Scripts](scripts/README.md) |
 | AD, NPS y RADIUS | [Estado del parcial y preparación](docs/RADIUS.md) |
 | Monitoreo SNMP del parcial | [Evidencias de R-2139 y SW-2139](docs/ZABBIX.md) |
@@ -43,12 +43,12 @@ El diagrama representa la LAN lógica; la salida disponible no identifica todos 
 
 - Conectividad: R-2139 obtuvo 5/5 respuestas desde 10.21.39.2 y 10.21.39.10. [Transcripción](evidencias/parcial/router-conectividad-dhcp.txt).
 - DHCP: concesiones automáticas **10.21.39.100 y 10.21.39.101**, tabla de conflictos vacía.
-- Router: SSHv2 habilitado, VTY con autenticación local y acceso exclusivo por SSH; Fa0/0 activa.
+- Router: sesión SSH de **usuario-n5** desde **10.21.39.101**, privilegio **5**, con las VTY configuradas para RADIUS. NPS registró el evento **6272**, cliente **R-2139 / 10.21.39.1**, política **LAB2139-Nivel5**.
 - Switch: port-security activo en Gi0/1–Gi0/3, máximo **2 MAC**, acción **shutdown**. La prueba posterior en **Gi0/3** registró **1 violación**, estado **Secure-shutdown / err-disabled** y el evento PSECURE_VIOLATION. [Evidencia de consola](evidencias/parcial/port-security-violacion-Gi0-3.txt).
-- Hardening: script ejecutado sobre la copia sanitizada de IOS 12.4; identifica controles presentes y hallazgos, sin conectarse ni modificar el router.
+- Hardening: análisis estático de solo lectura. Informe inicial: **7 conformes / 9 hallazgos**; después de incorporar RADIUS: **8 conformes / 8 hallazgos**. Se conservan la configuración y el informe iniciales.
 - Zabbix: las nuevas capturas muestran CPU, memoria y tráfico de R-2139, y tráfico y estado de interfaces de SW-2139.
 - AD/NPS: la nueva captura confirma IAS en Running, servidor 10.21.39.10/24, grupos RED-NIVEL-0/5/10 y cliente SW-2139 (.2) habilitado. La nueva consulta también confirma R-2139 (.1) habilitado.
-- AAA: SW-2139 tiene RADIUS configurado en SSH; falta acreditar una autenticación actual. El router aún tiene AAA deshabilitado. Los eventos NPS de la práctica anterior se conservan como antecedentes.
+- AAA: **R-2139 ya está probado** con SSH y aceptación NPS actual. SW-2139 tiene RADIUS configurado; falta su sesión de prueba y evento NPS correspondientes. Los eventos anteriores siguen separados como antecedentes.
 
 La violación de port-security está acreditada mediante la salida real de SW-2139, aportada por el autor tras el ensayo en Gi0/3. Las capturas anteriores con contador cero se conservan como estado previo. La recuperación también está acreditada: Gi0/3 regresó a Secure-up / connected, con una MAC aprendida y conservando el contador de 1 violación.
 
@@ -73,7 +73,11 @@ El análisis usa controles seleccionados de hardening relacionados con [CIS Cisc
 
 ### DHCP, interfaces y SSH del router
 
-La [transcripción original](evidencias/parcial/router-verificacion.txt) conserva las salidas disponibles. No se recuperó una captura de estos comandos del parcial.
+La [transcripción original](evidencias/parcial/router-verificacion.txt) y la [verificación DHCP posterior](evidencias/parcial/router-conectividad-dhcp.txt) conservan los datos de DHCP e interfaces. Sigue faltando una captura DHCP. La sesión SSH actual se muestra a continuación.
+
+![SSH actual a R-2139: usuario-n5, privilegio 5 y origen 10.21.39.101](imagenes/parcial/SSH-R-2139-usuario-n5-nivel5.png)
+
+[Evento NPS 6272 de aceptación](evidencias/parcial/NPS-6272-R-2139-usuario-n5.txt) · [Guardado de configuración con resultado OK](evidencias/parcial/R-2139-guardado-configuracion.txt)
 
 ### Port-security del parcial
 
@@ -109,6 +113,12 @@ IAS está activo en 10.21.39.10/24 y SW-2139 (.2) está registrado. R-2139 (.1) 
 ![Políticas LAB2139 de niveles 5 y 0 y cuenta usuario-n5 en RED-NIVEL-5](imagenes/parcial/NPS-politicas-5-0-usuario-n5.png)
 
 ![R-2139 registrado en NPS con IP 10.21.39.1 y Enabled True; secreto oculto](imagenes/parcial/NPS-R-2139-registrado.png)
+
+![AAA y listas VTY del router aplicadas; conectividad con NPS](imagenes/parcial/R-2139-AAA-VTY-conectividad.png)
+
+![NPS activo, puertos RADIUS, regla de firewall limitada y auditoría habilitada](imagenes/parcial/NPS-puertos-firewall-auditoria.png)
+
+El evento actual confirma aceptación por **LAB2139-Nivel5**. [Transcripción completa](evidencias/parcial/NPS-6272-R-2139-usuario-n5.txt). La hora del evento corresponde al reloj de Windows Server.
 
 ### Active Directory y NPS — antecedente /29
 

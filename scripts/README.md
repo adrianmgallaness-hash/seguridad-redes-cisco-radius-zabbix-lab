@@ -5,7 +5,8 @@ Requiere Python 3.10 o posterior, sin paquetes externos.
 Desde la raíz del repositorio:
 
 ```bash
-python scripts/audit_cis.py configs/R-2139-running-config.sanitized.cfg --output reportes/informe-cis-R-2139.md
+python scripts/audit_cis.py configs/historico/R-2139-pre-radius.sanitized.cfg --output reportes/informe-cis-R-2139.md
+python scripts/audit_cis.py configs/R-2139-running-config.sanitized.cfg --output reportes/informe-cis-R-2139-post-radius.md
 python -m unittest discover -s scripts -p "test_*.py"
 ```
 

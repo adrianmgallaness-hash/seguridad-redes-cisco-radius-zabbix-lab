@@ -26,7 +26,7 @@ Los nombres de esta captura son las etiquetas de los nodos GNS3. Se conservan si
 | Otro vecino ARP | .131; función no confirmada |
 | SW-2139 | Gi0/0 hacia router; Gi0/1 Windows AD/NPS; Gi0/2 PC; Gi0/3 Ubuntu/Zabbix; puertos access en VLAN 10 |
 | Servidor NPS actual | 10.21.39.10/24, interfaz Ethernet0 2; IAS Running confirmado por captura |
-| Destino RADIUS del switch | NPS-2139, 10.21.39.10, UDP 1812/1813; falta verificar autenticación |
+| Destino RADIUS del switch | NPS-2139, 10.21.39.10, UDP 1812/1813; autenticación del router confirmada por evento NPS 6272; prueba del switch pendiente |
 
 El pool DHCP anuncia DNS .10; no se dispone de una prueba de resolución que confirme ese servicio. La fecha de vencimiento de concesiones mostrada por IOS pertenece a 2002: documenta el reloj del equipo, no la fecha de ejecución del parcial.
 
@@ -34,4 +34,4 @@ El pool DHCP anuncia DNS .10; no se dispone de una prueba de resolución que con
 
 La práctica AAA usa 10.21.39.128/29, router .129, switch .130 y DC-2139 .131, dominio infra2139.test. La práctica Zabbix también usa /29, pero .131 corresponde a Ubuntu. Son escenarios distintos: no deben fusionarse ni atribuir los eventos NPS antiguos al router R-2139 actual.
 
-En el router del parcial figura `no aaa new-model`. Por tanto, los archivos disponibles no acreditan autenticación RADIUS en ese equipo.
+La exportación final del router contiene `aaa new-model`, listas LAB_RADIUS/LAB_EXEC en VTY y origen RADIUS Fa0/0. El evento NPS 6272 acredita el acceso de usuario-n5 a R-2139 .1, política LAB2139-Nivel5, desde PC-USUARIOS-1 .101. El servidor AD/NPS se identifica como DC-2139.infra2139.test; el sufijo DHCP lab2139.local no sustituye su dominio AD.

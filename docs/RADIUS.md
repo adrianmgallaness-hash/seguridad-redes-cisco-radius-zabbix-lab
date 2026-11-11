@@ -1,101 +1,73 @@
 # Active Directory, NPS y RADIUS del parcial
 
-## Evidencia recibida
+## Resultado actual
 
-![Servicio NPS, IP, clientes y grupos actuales](../imagenes/parcial/NPS-servicio-IP-clientes-grupos.png)
+**R-2139: SSH aceptado y privilegio 5 verificados.** La captura de la sesión y el evento NPS 6272 aportados por el autor corresponden al entorno /24 del parcial.
 
-| Dato | Resultado observado |
+![SSH en R-2139 con usuario-n5 y nivel 5](../imagenes/parcial/SSH-R-2139-usuario-n5-nivel5.png)
+
+| Dato | Evidencia actual |
 |---|---|
-| Servicio IAS | Running |
-| IPv4 del servidor | 10.21.39.10/24, Ethernet0 2 |
-| Grupos existentes | RED-NIVEL-0, RED-NIVEL-5 y RED-NIVEL-10 |
-| Cliente R1 | 10.21.39.129, habilitado |
-| Cliente SW1 | 10.21.39.130, habilitado |
-| Cliente SW-2139 | 10.21.39.2, habilitado |
-| Cliente para R-2139 .1 | Alta posterior confirmada: R-2139, 10.21.39.1, Enabled True |
-| Cuenta del grupo RED-NIVEL-5 | usuario-n5 |
+| Usuario AD | usuario-n5, miembro de RED-NIVEL-5 |
+| Cliente SSH | PC-USUARIOS-1, origen 10.21.39.101 |
+| Equipo de destino / NAS | R-2139, 10.21.39.1 |
+| Sesión IOS | VTY 0, puerto NAS 66 |
+| Privilegio observado | 5 |
+| Evento NPS | 6272, acceso concedido |
+| Política aplicada | LAB2139-Nivel5 |
+| Servidor AD/NPS | DC-2139.infra2139.test, 10.21.39.10 |
+| Tipo de autenticación registrado | PAP |
+| Hora del evento | 11/11/2026 19:23:18, reloj del servidor; zona no verificada |
+| Guardado en router | copy running-config startup-config, resultado [OK] |
 
-Los clientes .129 y .130 se conservan como registros de la práctica anterior; no representan las direcciones actuales .1 y .2.
+Fuentes: [evento NPS transcrito](../evidencias/parcial/NPS-6272-R-2139-usuario-n5.txt), [guardado](../evidencias/parcial/R-2139-guardado-configuracion.txt) y [running-config final sanitizado](../configs/R-2139-running-config.sanitized.cfg).
 
-## Configuración de red disponible
+## Preparación de NPS
 
-El [router](../configs/R-2139-running-config.sanitized.cfg) usa 10.21.39.1 y todavía contiene `no aaa new-model`. El [switch](../configs/SW-2139-running-config.sanitized.cfg) usa 10.21.39.2; sus VTY aplican LAB_RADIUS y LAB_EXEC, con NPS-2139 apuntando a .10.
+![Servicio y clientes iniciales](../imagenes/parcial/NPS-servicio-IP-clientes-grupos.png)
 
-Esto confirma preparación del switch y disponibilidad del servicio NPS. No acredita todavía un acceso aceptado por NPS desde los equipos actuales.
+![R-2139 agregado y habilitado](../imagenes/parcial/NPS-R-2139-registrado.png)
 
-## Políticas y usuario observados
+R-2139 .1 y SW-2139 .2 están registrados. Los clientes R1 .129 y SW1 .130 pertenecen al direccionamiento anterior. Los secretos compartidos se introdujeron localmente y no se publican.
 
 ![Políticas LAB2139 de niveles 10 y 5](../imagenes/parcial/NPS-politicas-10-5.png)
 
-![Políticas LAB2139 de niveles 5 y 0; miembro usuario-n5](../imagenes/parcial/NPS-politicas-5-0-usuario-n5.png)
+![Políticas de niveles 5 y 0 y usuario-n5](../imagenes/parcial/NPS-politicas-5-0-usuario-n5.png)
 
-| Política habilitada | Orden visible | Atributo Cisco |
+| Política habilitada | Orden observado | Atributo |
 |---|---|---|
 | LAB2139-Nivel10 | 4 | shell:priv-lvl=10 |
 | LAB2139-Nivel5 | 5 | shell:priv-lvl=5 |
 | LAB2139-Nivel0 | 6 | shell:priv-lvl=0 |
 
-Las tres muestran NP-Allow-Dial-in TRUE y Service-Type Login. Las condiciones se representan por SID en la salida. La consulta Get-ADGroupMember muestra a usuario-n5 dentro de RED-NIVEL-5; no acredita todavía un inicio de sesión ni el privilegio realmente asignado.
+Las [políticas AAA_Cisco anteriores](../imagenes/parcial/NPS-politicas-AAA-anteriores.png) siguen presentes en órdenes 1–3. El evento recibido determina que esta sesión usó LAB2139-Nivel5. No se afirma que los niveles 0 y 10 hayan sido probados en el entorno actual.
 
-La [captura de políticas anteriores](../imagenes/parcial/NPS-politicas-AAA-anteriores.png) muestra AAA_Cisco_Nivel10/5/0 antes de las LAB2139, en órdenes 1/2/3. No se deshabilitan ni se cambia su orden basándose solo en estas capturas. El evento NPS del ensayo identificará la política efectivamente utilizada.
+## Configuración de AAA del router
 
-El [listado previo](../imagenes/parcial/NPS-clientes-antes-alta-router.png) no contiene .1. La nueva captura posterior confirma su alta:
+![AAA, VTY y conectividad](../imagenes/parcial/R-2139-AAA-VTY-conectividad.png)
 
-![R-2139 habilitado en NPS](../imagenes/parcial/NPS-R-2139-registrado.png)
+El router usa autenticación y autorización local por defecto; las VTY aplican LAB_RADIUS y LAB_EXEC con RADIUS y respaldo local. El origen RADIUS es FastEthernet0/0 (.1), destino .10, UDP 1812/1813. El respaldo local se usa ante falta de respuesta del servidor; un rechazo explícito de NPS no activa ese respaldo.
 
-Se ejecutó el alta con Read-Host -AsSecureString y se reinició IAS. El secreto aparece oculto; no se publica su valor.
+La consola mantiene su acceso administrativo. El [bloque preparado durante la implementación](../scripts/R-2139-radius-propuesto.cli) contiene un marcador de secreto; la fuente definitiva del estado aplicado es el running-config exportado, no ese ejemplo.
 
-## Registro del router — completado
+## Incidencias y resolución observadas
 
-En la consola NPS de Windows Server, abrir **Clientes y servidores RADIUS → Clientes RADIUS → Nuevo**. Crear un cliente habilitado con nombre **R-2139**, dirección **10.21.39.1** y fabricante **RADIUS Standard**. Elegir un secreto compartido privado, que deberá coincidir con el configurado después en el router.
+1. Linux rechazó inicialmente el intercambio de claves group1, la clave de host ssh-rsa y los cifrados CBC del IOS antiguo.
+2. Se habilitó compatibilidad únicamente en la invocación SSH del laboratorio:
+   `ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -oHostKeyAlgorithms=+ssh-rsa -oCiphers=+aes128-cbc -l usuario-n5 10.21.39.1`.
+3. RADIUS acumuló 12 tiempos de espera sin respuestas durante el diagnóstico.
+4. La cuenta AD fue comprobada habilitada, sin bloqueo ni contraseña vencida. Se restableció su contraseña para el ensayo; el valor no se publica.
+5. Se verificó IAS Running y escucha UDP; se creó la regla LAB2139-RADIUS-Cisco para .10, puertos 1812/1813, con origen limitado a .1/.2. También se habilitó auditoría NPS de éxitos y fallos.
+6. El ensayo posterior ingresó por SSH con privilegio 5 y generó el evento 6272. Esta secuencia no constituye una prueba aislada de que el firewall fuera la única causa.
 
-No sustituir el secreto existente de SW-2139 ni borrar los clientes anteriores durante esta preparación. La consulta posterior ya fue recibida y confirma R-2139 .1 habilitado.
+![NPS, puertos, regla y auditoría](../imagenes/parcial/NPS-puertos-firewall-auditoria.png)
 
-Después consultar:
+Los algoritmos SSH y PAP son limitaciones del entorno de laboratorio; no se presentan como protección moderna de producción. Referencia: [OpenSSH: compatibilidad con algoritmos antiguos](https://www.openssh.org/legacy.html).
 
-```powershell
-Get-NpsRadiusClient | Select-Object Name,Address,Enabled
-netsh nps show np
-Get-ADGroupMember "RED-NIVEL-5" | Select-Object Name,SamAccountName
-```
+## Pendientes
 
-Las políticas y la cuenta de prueba ya aparecen en las capturas; también se confirmó el alta de R-2139 .1.
+- Probar SSH/RADIUS en SW-2139 .2 y conservar su evento NPS actual.
+- Si la rúbrica exige demostrar cada nivel, aportar sesiones de niveles 0 y 10 de este entorno.
+- Añadir una captura del evento 6272 si se requiere evidencia visual del registro; actualmente se conserva su transcripción real.
 
-## Pruebas que faltan
-
-- Alta de R-2139 .1: completada y verificada.
-- Comprobar en el ensayo la política efectiva; los atributos configurados ya fueron revisados.
-- Configurar AAA/RADIUS en el router conservando acceso local de recuperación.
-- Autenticar por SSH en router y switch usando una cuenta AD de prueba.
-- Capturar la sesión, el privilegio asignado y el evento NPS 6272 correspondiente a .1/.2.
-- Obtener nuevos running-configs sanitizados después de cambios reales y conservar el informe inicial de auditoría.
-
-Los [eventos de la práctica anterior](../antecedentes/AAA/README.md) siguen separados de estas pruebas.
-
-Referencia: [Microsoft: configurar clientes RADIUS en NPS](https://learn.microsoft.com/en-us/windows-server/networking/technologies/nps/nps-radius-clients-configure).
-
-## Alta por PowerShell — ejecutada y verificada
-
-En Windows Server, PowerShell como administrador:
-
-```powershell
-$clavePrivada = Read-Host "Secreto compartido para R-2139" -AsSecureString
-New-NpsRadiusClient -Name "R-2139" -Address "10.21.39.1" -SharedSecret ([System.Net.NetworkCredential]::new("", $clavePrivada).Password) -ErrorAction Stop | Out-Null
-Remove-Variable clavePrivada
-Restart-Service IAS
-Get-NpsRadiusClient | Select-Object Name,Address,Enabled
-```
-
-Elegir un secreto privado y conservarlo para introducir el mismo en el router. No incluirlo en capturas o archivos públicos. La entrada se oculta y el objeto creado no se imprime. El reinicio de IAS interrumpe brevemente nuevas autenticaciones RADIUS. Si la creación da error, revisar el mensaje antes de continuar; no modificar otro cliente para sustituirlo.
-
-La [documentación de New-NpsRadiusClient](https://learn.microsoft.com/en-us/powershell/module/nps/new-npsradiusclient) indica que el servicio NPS debe reiniciarse después de usar el cmdlet. La captura de la consulta posterior acredita el alta.
-
-## Siguiente fase: configuración del router y prueba SSH
-
-Se preparó el [bloque RADIUS propuesto para IOS 12.4](../scripts/R-2139-radius-propuesto.cli). Todavía no se afirma que esté aplicado. Configura NPS .10, origen .1, listas LAB_RADIUS/LAB_EXEC en las VTY y autenticación local de consola/AUX. El secreto es un marcador y debe sustituirse localmente.
-
-El respaldo local en la lista RADIUS se utiliza cuando el servidor no responde; un rechazo explícito de NPS no activa ese respaldo. Mantener abierta la consola local durante la prueba.
-
-Probar desde Linux `ssh -l usuario-n5 10.21.39.1` y, dentro de esa sesión, `show privilege`. Se espera nivel 5 si se aplica la política correspondiente; el resultado real y el evento 6272 deben recibirse antes de documentar aceptación. La contraseña AD de usuario-n5 es independiente del secreto compartido RADIUS.
-
-Referencia: [Cisco: autenticación en IOS 12.4 y respaldo local](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/sec_usr_aaa/configuration/12-4/sec-usr-aaa-12-4-book/sec-cfg-authentifcn.html).
+Los [antecedentes AAA](../antecedentes/AAA/README.md) permanecen separados de estas pruebas.

@@ -1,0 +1,37 @@
+TimeCreated : 11/11/2026 19:23:18
+Id          : 6272
+Message     : El servidor de directivas de redes concedió acceso a un usuario.
+
+              Usuario:
+                Id. de seguridad:                       S-1-5-21-2910620228-507922188-1089644258-1118
+                Nombre de cuenta:                       usuario-n5
+                Dominio de cuenta:                      INFRA2139
+                Nombre de cuenta completo:      infra2139.test/Users/usuario-n5
+
+              Equipo cliente:
+                Id. de seguridad:                       S-1-0-0
+                Nombre de cuenta:                       -
+                Nombre de cuenta completo:      -
+                Identificador de estación llamada:              -
+                Identificador de estación que llama:            10.21.39.101
+
+              NAS:
+                Dirección IPv4 de NAS:          10.21.39.1
+                Dirección IPv6 de NAS:          -
+                Identificador de NAS:                   -
+                Tipo de puerto NAS:                     Virtual
+                Puerto NAS:                     66
+
+              Cliente RADIUS:
+                Nombre descriptivo del cliente:         R-2139
+                Dirección IP del cliente:                       10.21.39.1
+
+              Detalles de autenticación:
+                Nombre de directiva de solicitud de conexión:   Usar autenticación de Windows para todos los usuarios
+                Nombre de directiva de red:             LAB2139-Nivel5
+                Proveedor de autenticación:             Windows
+                Servidor de autenticación:              DC-2139.infra2139.test
+                Tipo de autenticación:          PAP
+                Tipo de EAP:                    -
+                Identificador de sesión de cuenta:              -
+                Resultados de registro:                 Se escribió información de cuentas en el archivo de registro local.
