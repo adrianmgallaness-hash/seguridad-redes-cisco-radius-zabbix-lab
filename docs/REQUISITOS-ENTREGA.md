@@ -5,8 +5,8 @@
 | README con propósito y descripción | README.md, preparado |
 | Diagrama | imagenes/topologia.svg, incrustado en README |
 | Video al inicio | [Video publicado](https://youtu.be/cIgDrLqfHaw), enlazado al inicio del README |
-| Imágenes incrustadas de los requisitos | README incluye todas las capturas recuperadas; DHCP y SSH del parcial solo tienen transcripción/configuración |
-| Un archivo de configuración por equipo | Router exportado y sanitizado; switch con fragmento documental, falta su running-config completo |
+| Imágenes incrustadas de los requisitos | README incluye topología, port-security y nuevas capturas Zabbix de R-2139/SW-2139; DHCP y SSH del parcial solo tienen transcripción/configuración |
+| Un archivo de configuración por equipo | Running-configs completos de R-2139 y SW-2139, exportados y sanitizados |
 | Carpeta de imágenes y diagrama | imagenes/ organizada por procedencia |
 
-Los antecedentes AAA/Zabbix usan otra red y no sustituyen evidencias actuales. No se presenta el repositorio como una entrega con todos los requisitos verificados mientras falten esos materiales.
+Los antecedentes AAA y las primeras capturas Zabbix usan otra red; las nuevas capturas del parcial están identificadas en docs/ZABBIX.md. Sigue pendiente acreditar RADIUS en el entorno actual. No se presenta el repositorio como una entrega con todos los requisitos verificados mientras falten esos materiales.

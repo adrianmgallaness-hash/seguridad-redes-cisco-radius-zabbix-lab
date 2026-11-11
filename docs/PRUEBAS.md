@@ -3,13 +3,13 @@
 | Prueba | Fuente | Resultado y alcance |
 |---|---|---|
 | DHCP | [Salida del router](../evidencias/parcial/router-verificacion.txt) | Dos concesiones automáticas; sin conflictos listados |
-| ARP e interfaz | Misma salida | Vecinos aprendidos y Fa0/0 up/up; no equivale a una prueba completa de conectividad entre todos los hosts |
+| ARP, interfaz y conectividad | [Nueva transcripción](../evidencias/parcial/router-conectividad-dhcp.txt) y salida inicial | Fa0/0 up/up; ping a .2 y .10 con 5/5 respuestas. El ping no demuestra los servicios de cada destino |
 | SSH | Salida y configuración del router | SSHv2 habilitado y VTY solo SSH con login local; no se recuperó una sesión SSH del parcial |
-| Port-security | [Captura](../imagenes/parcial/port-security.png) | Gi0/1–3 protegidos; 2 MAC como máximo y shutdown |
-| Violación real | Declaración del autor | Reportada como realizada; no verificable con la captura disponible, que muestra cero violaciones y Gi0/1 Secure-up |
+| Port-security | [Captura](../imagenes/parcial/port-security.png) y [nueva salida](../evidencias/parcial/port-security-verificacion.txt) | Gi0/1–3 protegidos; 2 MAC como máximo y shutdown |
+| Violación real | Declaración del autor | Reportada como realizada; no verificable con la captura disponible, que junto con la nueva salida muestra cero violaciones, Gi0/1 Secure-up y filtro de logs sin coincidencias |
 | AD y NPS | [Antecedente AAA](../antecedentes/AAA/README.md) | Grupos y políticas, aceptación 6272 y rechazo 6273 en la práctica /29 |
-| RADIUS del parcial | Configuración R-2139 | AAA deshabilitado; sin evidencia actual de autenticación NPS en este router |
-| Zabbix/SNMP | [Antecedente Zabbix](../antecedentes/Zabbix/README.md) | Métricas reales de R1 y Switch en otra práctica; sin captura actual de R-2139/SW-2139 |
+| RADIUS del parcial | Running-configs de R-2139 y SW-2139 | Switch: VTY con LAB_RADIUS y autorización LAB_EXEC hacia NPS .10. Router: AAA deshabilitado. Falta acreditar autenticación con un evento actual NPS |
+| Zabbix/SNMP del parcial | [Capturas de R-2139 y SW-2139](ZABBIX.md) | CPU, memoria y tráfico del router; tráfico y puertos activos del switch. IP de interfaz SNMP y prueba negativa de ACL no visibles |
 | Auditoría | [Reporte](../reportes/informe-cis-R-2139.md) | Ejecución local sobre copia sanitizada; solo lectura |
 
 ## Consultas para ampliar las evidencias

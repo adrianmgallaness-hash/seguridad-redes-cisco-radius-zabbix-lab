@@ -4,7 +4,7 @@
 **Adrian Magallanes · Matrícula 2025-2139**  
 Cisco IOS · Active Directory / NPS / RADIUS · DHCP · SSH · Port-security · Zabbix / SNMP · Revisión de hardening
 
-Laboratorio desarrollado en GNS3 y VMware. Reúne la configuración exportada del router **R-2139**, las salidas originales disponibles del parcial y antecedentes de prácticas de AAA y monitoreo.
+Laboratorio desarrollado en GNS3 y VMware. Reúne la configuración exportada del router **R-2139**, las salidas originales disponibles del parcial, las capturas del monitoreo de R-2139 y SW-2139, y antecedentes de prácticas de AAA y monitoreo.
 
 ## Recorrido de la entrega
 
@@ -17,7 +17,8 @@ Laboratorio desarrollado en GNS3 y VMware. Reúne la configuración exportada de
 | Análisis estático de hardening | [Informe generado](reportes/informe-cis-R-2139.md) |
 | Herramienta y reproducción | [Scripts](scripts/README.md) |
 | AD, NPS y RADIUS | [Antecedente AAA](antecedentes/AAA/README.md) |
-| Monitoreo SNMP | [Antecedente Zabbix](antecedentes/Zabbix/README.md) |
+| Monitoreo SNMP del parcial | [Evidencias de R-2139 y SW-2139](docs/ZABBIX.md) |
+| Metodología de auditoría | [Alcance e informe inicial](docs/AUDITORIA.md) |
 
 ## Topología del parcial
 
@@ -36,22 +37,24 @@ flowchart LR
   S --- W["Host observado en ARP · .131"]
 ```
 
-El diagrama representa la LAN lógica; la salida disponible no identifica todos los enlaces físicos ni el papel del host .131. La dirección .2 también aparece en ARP, sin identificación suficiente para asignarla como gestión del switch.
+El diagrama representa la LAN lógica; la salida disponible no identifica todos los enlaces físicos ni el papel del host .131. El running-config recibido de SW-2139 confirma Vlan10 con dirección de gestión 10.21.39.2/24.
 
 ## Resultados documentados
 
+- Conectividad: R-2139 obtuvo 5/5 respuestas desde 10.21.39.2 y 10.21.39.10. [Transcripción](evidencias/parcial/router-conectividad-dhcp.txt).
 - DHCP: concesiones automáticas **10.21.39.100 y 10.21.39.101**, tabla de conflictos vacía.
 - Router: SSHv2 habilitado, VTY con autenticación local y acceso exclusivo por SSH; Fa0/0 activa.
 - Switch: port-security activo en Gi0/1–Gi0/3, máximo **2 MAC**, acción **shutdown**. La captura conservada muestra contador de violaciones **0**.
 - Hardening: script ejecutado sobre la copia sanitizada de IOS 12.4; identifica controles presentes y hallazgos, sin conectarse ni modificar el router.
-- AAA y Zabbix: evidencias originales de prácticas anteriores, identificadas expresamente por su procedencia.
+- Zabbix: las nuevas capturas muestran CPU, memoria y tráfico de R-2139, y tráfico y estado de interfaces de SW-2139.
+- AAA: SW-2139 tiene RADIUS configurado en SSH con NPS 10.21.39.10; falta acreditar una autenticación actual. El router aún tiene AAA deshabilitado. Las capturas NPS anteriores se mantienen como antecedentes.
 
 La prueba de violación de port-security fue reportada como realizada por el autor en esta conversación; no se dispone de una evidencia posterior que permita verificarla. No se presenta el contador cero como demostración de una violación.
 
 ## Estructura
 
 ```text
-configs/        Configuración sanitizada y fragmento observado del switch
+configs/        Running-configs sanitizados de R-2139 y SW-2139
 docs/           Topología, pruebas y metodología
 evidencias/     Material original del parcial
 scripts/        Auditor y comandos de consulta
@@ -89,7 +92,15 @@ La [transcripción original](evidencias/parcial/router-verificacion.txt) conserv
 
 ![Sesión SSH de SW1 a R1 con autenticación local](imagenes/aaa/18-R1-SSH.jpg)
 
-### Zabbix y SNMP — antecedente A3
+### Zabbix y SNMP — R-2139 y SW-2139
+
+![Datos recientes del router R-2139 en Zabbix](imagenes/parcial/zabbix-R-2139.png)
+
+![Datos recientes del switch SW-2139 en Zabbix](imagenes/parcial/zabbix-SW-2139.png)
+
+Las capturas muestran los nombres de los equipos y métricas recibidas por Zabbix. No muestran las IP de las interfaces SNMP, la comunidad ni un ensayo de bloqueo por ACL. [Detalle de resultados](docs/ZABBIX.md).
+
+### Zabbix — antecedente A3
 
 ![Métricas del router de la práctica A3](imagenes/zabbix/zabbix-r1.png)
 

@@ -11,3 +11,7 @@ El router muestra valores recientes de CPU y estado de temperatura; también exi
 El switch muestra interfaz Gi0/0 up, tráfico y métricas ICMP. El ítem Speed muestra 1 Gbps: no se extrapola como velocidad física del enlace del parcial.
 
 En el R-2139 del parcial, la configuración permite SNMP RO mediante ACL 20 para toda la LAN /24. Esto acredita la configuración del agente, pero no reemplaza una captura de sondeo o de datos recientes del parcial.
+
+## Nuevas evidencias del parcial
+
+Se incorporaron capturas con los hosts R-2139 y SW-2139. Consultar el [monitoreo del parcial](../../docs/ZABBIX.md). Las imágenes de esta carpeta siguen documentando la práctica anterior.

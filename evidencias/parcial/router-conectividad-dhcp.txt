@@ -1,0 +1,33 @@
+R-2139#ping 10.21.39.2
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.21.39.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 8/11/16 ms
+R-2139#ping 10.21.39.10
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.21.39.10, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 12/13/16 ms
+R-2139#show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address          Client-ID/              Lease expiration        Type
+                    Hardware address/
+                    User name
+10.21.39.100        0100.0c29.9cb1.f5       Mar 02 2002 02:10 AM    Automatic
+10.21.39.101        0100.0c29.b038.7b       Mar 02 2002 02:45 AM    Automatic
+R-2139#show ip dhcp pool
+
+Pool LAN-2139 :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0
+ Total addresses                : 254
+ Leased addresses               : 2
+ Pending event                  : none
+ 1 subnet is currently in the pool :
+ Current index        IP address range                    Leased addresses
+ 10.21.39.102         10.21.39.1       - 10.21.39.254      2
+R-2139#show ip ssh
+SSH Enabled - version 2.0
+Authentication timeout: 60 secs; Authentication retries: 3

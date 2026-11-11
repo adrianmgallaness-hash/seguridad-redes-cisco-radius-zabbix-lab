@@ -22,8 +22,10 @@ Los nombres de esta captura son las etiquetas de los nodos GNS3. Se conservan si
 | DHCP LAN-2139 | Red /24, gateway .1, DNS .10, dominio lab2139.local |
 | Exclusiones DHCP | .1–.99 y .131 |
 | Clientes con concesión | .100 y .101 |
-| Otros vecinos ARP | .2 y .131; función no confirmada |
-| SW-2139 | Gi0/1–Gi0/3 muestran MAC dinámicas seguras en VLAN 10 |
+| Gestión SW-2139 | Vlan10 10.21.39.2/24, gateway 10.21.39.1; confirmado por running-config |
+| Otro vecino ARP | .131; función no confirmada |
+| SW-2139 | Gi0/0 hacia router; Gi0/1 Windows AD/NPS; Gi0/2 PC; Gi0/3 Ubuntu/Zabbix; puertos access en VLAN 10 |
+| Destino RADIUS del switch | NPS-2139, 10.21.39.10, UDP 1812/1813; pendiente verificar servicio y autenticación |
 
 El pool DHCP anuncia DNS .10; no se dispone de una prueba de resolución que confirme ese servicio. La fecha de vencimiento de concesiones mostrada por IOS pertenece a 2002: documenta el reloj del equipo, no la fecha de ejecución del parcial.
 
