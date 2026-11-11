@@ -1,52 +1,60 @@
-# Prueba controlada de violación de port-security
+# Prueba real de violación de port-security en Gi0/3
 
-**Estado:** procedimiento preparado; la ejecución todavía no está acreditada. La última salida de Gi0/1 conserva contador 0 y Secure-up.
+**Estado: violación acreditada.** La salida de consola posterior al ensayo fue aportada por el autor y se conserva como [transcripción original](../evidencias/parcial/port-security-violacion-Gi0-3.txt). La recuperación todavía no está acreditada.
 
-## Preparación
+## Puerto e interfaz identificados
 
-Usar Gi0/2, puerto PC-USUARIOS, manteniendo abiertas las consolas GNS3. Gi0/1 (Windows AD/NPS), Gi0/3 (Zabbix) y Gi0/0 (router) permanecen conectados.
+Las consultas previas de SW-2139 localizaron la MAC 000c.299c.b1f5 en Gi0/3, VLAN 10, como SecureDynamic en la tabla de port-security. Linux mostró esa MAC en ens33. El puerto conserva la descripción UBUNTU-DESKTOP-ZABBIX.
 
-Guardar primero estas consultas:
+La tabla general MAC mostró STATIC; la tabla específica de port-security mostró SecureDynamic. Se conserva esa diferencia sin afirmar que se configuró una MAC estática manual.
 
-```text
-show port-security interface GigabitEthernet0/2
-show port-security address
-show interfaces GigabitEthernet0/2 status
-```
+## Método del ensayo
 
-## Ensayo manteniendo máximo 2 MAC
+Se mantuvo el máximo de **2 MAC** y la acción **shutdown**. Desde Linux/ens33 se enviaron tres tramas ARP de prueba con MAC locales distintas (0221.3900.0001, 0221.3900.0002 y 0221.3900.0003), mediante el bloque Python facilitado durante la práctica. El generador no cambia la IP ni la MAC permanente de la interfaz.
 
-Intercalar temporalmente un switch Ethernet sencillo de GNS3 entre Gi0/2 y el PC de usuarios. Conectar también dos VPCS nuevos a ese switch de prueba. No crear otro enlace de ese switch a la LAN.
+Ya existía una MAC aprendida. El evento identifica 0221.3900.0002 como origen causante de la violación; no se afirma que las tres tramas hayan atravesado el puerto tras su bloqueo.
 
-Así llegan tres MAC distintas al mismo puerto protegido. Generar tráfico desde el PC original con `ping 10.21.39.1`. En cada VPCS ejecutar `ip dhcp` para que emita tráfico con su propia MAC; si recibe dirección, ejecutar también `ping 10.21.39.1`. Al llegar tráfico desde la tercera MAC, el modo shutdown debe bloquear Gi0/2. La obtención DHCP del último VPCS puede fallar como consecuencia del bloqueo; no se interpreta como prueba de DHCP defectuoso.
+No se utilizó el ensayo alternativo propuesto anteriormente con VPCS y Gi0/2.
 
-No se cambia el máximo permitido de 2 ni se conectan los VPCS a otros puertos protegidos.
+## Resultado observado
 
-## Captura posterior, antes de recuperar
+| Control | Resultado real |
+|---|---|
+| Puerto / VLAN | Gi0/3 / 10 |
+| Máximo de MAC | 2 |
+| Modo de violación | Shutdown |
+| Contador de violaciones | 1 |
+| Estado port-security | Secure-shutdown |
+| Estado de interfaz | err-disabled |
+| MAC causante | 0221.3900.0002 |
+| Registros | PM-4-ERR_DISABLE y PORT_SECURITY-2-PSECURE_VIOLATION |
+| Reloj del switch en el evento | Nov 11 17:12:00; marca del dispositivo, sin verificar sincronización |
+
+Gi0/1 y Gi0/2 siguieron mostrando cero violaciones en la consulta posterior. Las salidas anteriores con contador cero se conservan como estado previo, no como resultado del ensayo.
+
+## Consultas de evidencia ejecutadas
 
 ```text
 show port-security
-show port-security interface GigabitEthernet0/2
-show interfaces GigabitEthernet0/2 status
+show port-security interface GigabitEthernet0/3
+show interfaces GigabitEthernet0/3 status
 show logging | include PSECURE|ERR_DISABLE
 ```
 
-Documentar el contador real, estado Secure-shutdown/err-disabled según la salida y los mensajes disponibles. No inventar el contador ni publicar este procedimiento como resultado ejecutado.
+## Recuperación indicada; pendiente de evidencia
 
-## Recuperación
-
-Después de guardar la evidencia, retirar el switch temporal y los dos VPCS; restaurar la conexión directa del PC a Gi0/2. Desde la consola de SW-2139:
+Después de terminar el generador y guardar las consultas anteriores, ejecutar desde la consola GNS3 de SW-2139:
 
 ```text
 configure terminal
-interface GigabitEthernet0/2
+interface GigabitEthernet0/3
 shutdown
 no shutdown
 end
-show port-security interface GigabitEthernet0/2
-show interfaces GigabitEthernet0/2 status
+show port-security interface GigabitEthernet0/3
+show interfaces GigabitEthernet0/3 status
 ```
 
-Comprobar el ping desde el PC. Conservar capturas de antes, bloqueo y recuperación.
+En Linux comprobar conectividad mediante `ping -c 4 10.21.39.1`. Publicar la salida posterior cuando se reciba, sin asumir que la recuperación ya ocurrió.
 
 Referencia: [Cisco: port-security y recuperación manual](https://www.cisco.com/c/en/us/support/docs/switches/catalyst-3750-series-switches/72846-layer2-secftrs-catl3fixed.html).

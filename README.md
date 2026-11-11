@@ -44,12 +44,12 @@ El diagrama representa la LAN lógica; la salida disponible no identifica todos 
 - Conectividad: R-2139 obtuvo 5/5 respuestas desde 10.21.39.2 y 10.21.39.10. [Transcripción](evidencias/parcial/router-conectividad-dhcp.txt).
 - DHCP: concesiones automáticas **10.21.39.100 y 10.21.39.101**, tabla de conflictos vacía.
 - Router: SSHv2 habilitado, VTY con autenticación local y acceso exclusivo por SSH; Fa0/0 activa.
-- Switch: port-security activo en Gi0/1–Gi0/3, máximo **2 MAC**, acción **shutdown**. La captura conservada muestra contador de violaciones **0**.
+- Switch: port-security activo en Gi0/1–Gi0/3, máximo **2 MAC**, acción **shutdown**. La prueba posterior en **Gi0/3** registró **1 violación**, estado **Secure-shutdown / err-disabled** y el evento PSECURE_VIOLATION. [Evidencia de consola](evidencias/parcial/port-security-violacion-Gi0-3.txt).
 - Hardening: script ejecutado sobre la copia sanitizada de IOS 12.4; identifica controles presentes y hallazgos, sin conectarse ni modificar el router.
 - Zabbix: las nuevas capturas muestran CPU, memoria y tráfico de R-2139, y tráfico y estado de interfaces de SW-2139.
 - AAA: SW-2139 tiene RADIUS configurado en SSH con NPS 10.21.39.10; falta acreditar una autenticación actual. El router aún tiene AAA deshabilitado. Las capturas NPS anteriores se mantienen como antecedentes.
 
-La prueba de violación de port-security fue reportada como realizada por el autor en esta conversación; no se dispone de una evidencia posterior que permita verificarla. No se presenta el contador cero como demostración de una violación.
+La violación de port-security está acreditada mediante la salida real de SW-2139, aportada por el autor tras el ensayo en Gi0/3. Las capturas anteriores con contador cero se conservan como estado previo. La recuperación del puerto se documentará cuando se reciba su salida posterior.
 
 ## Estructura
 
@@ -76,7 +76,20 @@ La [transcripción original](evidencias/parcial/router-verificacion.txt) conserv
 
 ### Port-security del parcial
 
+**Antes de la prueba:** captura original con contador cero.
+
 ![Port-security de SW-2139: máximo dos MAC, shutdown y cero violaciones en la captura](imagenes/parcial/port-security.png)
+
+**Después de la prueba en Gi0/3:** extracto de la transcripción original (no es una captura de pantalla).
+
+```text
+Port Status                : Secure-shutdown
+Maximum MAC Addresses      : 2
+Last Source Address:Vlan   : 0221.3900.0002:10
+Security Violation Count   : 1
+```
+
+[Salida completa y registros de violación](evidencias/parcial/port-security-violacion-Gi0-3.txt) · [Procedimiento y recuperación](docs/PRUEBA-PORT-SECURITY.md)
 
 ### Active Directory y NPS — antecedente /29
 

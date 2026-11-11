@@ -5,7 +5,7 @@
 
 ![Estado de port-security](../imagenes/parcial/port-security.png)
 
-Gi0/1–Gi0/3 muestran máximo 2 MAC, una aprendida por puerto, acción Shutdown y cero violaciones. Gi0/1 está Secure-up. El valor «Shutdown» es la acción configurada, no el estado operativo observado.
+En la captura anterior al ensayo, Gi0/1–Gi0/3 muestran máximo 2 MAC, una aprendida por puerto, acción Shutdown y cero violaciones. Gi0/1 está Secure-up. El valor «Shutdown» es la acción configurada, no el estado operativo observado.
 
 ## Monitoreo del parcial
 
@@ -18,6 +18,7 @@ Las capturas AD/NPS y las capturas Zabbix anteriores se conservan como anteceden
 ## Verificaciones adicionales aportadas
 
 - [Conectividad y DHCP del router](parcial/router-conectividad-dhcp.txt): fragmento textual de la nueva salida, con pings exitosos a .2 y .10 y dos concesiones DHCP. Se omitieron intentos con errores de sintaxis; no se cambian los resultados.
-- [Port-security del switch](parcial/port-security-verificacion.txt): transcripción de consultas, contador cero y sin coincidencias en el filtro de logs. No acredita una violación.
+- [Port-security antes del ensayo](parcial/port-security-verificacion.txt): transcripción de consultas, contador cero y sin coincidencias en el filtro de logs.
+- [Violación real en Gi0/3](parcial/port-security-violacion-Gi0-3.txt): transcripción posterior aportada por el autor; contador 1, Secure-shutdown/err-disabled, MAC 0221.3900.0002 y registros PSECURE_VIOLATION/ERR_DISABLE. Esta salida sí acredita la violación. La recuperación se añadirá al recibir su evidencia.
 
 La nueva exportación del router sigue mostrando `no aaa new-model`. La respuesta ICMP de .10 no confirma por sí sola que sea el servidor NPS.

@@ -6,7 +6,7 @@
 | ARP, interfaz y conectividad | [Nueva transcripción](../evidencias/parcial/router-conectividad-dhcp.txt) y salida inicial | Fa0/0 up/up; ping a .2 y .10 con 5/5 respuestas. El ping no demuestra los servicios de cada destino |
 | SSH | Salida y configuración del router | SSHv2 habilitado y VTY solo SSH con login local; no se recuperó una sesión SSH del parcial |
 | Port-security | [Captura](../imagenes/parcial/port-security.png) y [nueva salida](../evidencias/parcial/port-security-verificacion.txt) | Gi0/1–3 protegidos; 2 MAC como máximo y shutdown |
-| Violación real | Declaración del autor | Reportada como realizada; no verificable con la captura disponible, que junto con la nueva salida muestra cero violaciones, Gi0/1 Secure-up y filtro de logs sin coincidencias |
+| Violación real | [Consola de SW-2139](../evidencias/parcial/port-security-violacion-Gi0-3.txt) | Acreditada en Gi0/3: máximo 2 MAC, contador 1, Secure-shutdown, err-disabled y eventos PSECURE_VIOLATION/ERR_DISABLE para MAC 0221.3900.0002 |
 | AD y NPS | [Antecedente AAA](../antecedentes/AAA/README.md) | Grupos y políticas, aceptación 6272 y rechazo 6273 en la práctica /29 |
 | RADIUS del parcial | Running-configs de R-2139 y SW-2139 | Switch: VTY con LAB_RADIUS y autorización LAB_EXEC hacia NPS .10. Router: AAA deshabilitado. Falta acreditar autenticación con un evento actual NPS |
 | Zabbix/SNMP del parcial | [Capturas de R-2139 y SW-2139](ZABBIX.md) | CPU, memoria y tráfico del router; tráfico y puertos activos del switch. IP de interfaz SNMP y prueba negativa de ACL no visibles |
@@ -16,4 +16,4 @@
 
 El [archivo IOS](../scripts/verificacion-ios.cli) contiene solo consultas. Registrar el equipo y su fecha; revisar las salidas antes de publicarlas. No publicar comandos SNMP con la comunidad literal ni configuraciones con secretos.
 
-Para verificar una violación se requiere una salida posterior al ensayo que muestre el contador, el estado del puerto y, si existe, el registro PSECURE_VIOLATION. Según la [documentación de Cisco](https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst9600/software/release/17-17/configuration_guide/sec/b_1717_sec_9600_cg/port_security.html), el modo shutdown pone el puerto en error-disabled cuando se produce una violación. El comportamiento descrito por el fabricante es una referencia, no evidencia de ejecución en este laboratorio.
+La nueva salida del ensayo en Gi0/3 aporta contador, estado del puerto y registro PSECURE_VIOLATION. Se conservan las consultas anteriores con contador cero como línea base. Según la [documentación de Cisco](https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst9600/software/release/17-17/configuration_guide/sec/b_1717_sec_9600_cg/port_security.html), el modo shutdown pone el puerto en error-disabled cuando se produce una violación. La referencia explica el comportamiento; la evidencia de ejecución es la transcripción aportada de SW-2139. La recuperación aún requiere su salida posterior.
