@@ -102,7 +102,11 @@ Security Violation Count   : 1
 
 ![NPS activo, IP del servidor, clientes registrados y grupos actuales](imagenes/parcial/NPS-servicio-IP-clientes-grupos.png)
 
-IAS está activo en 10.21.39.10/24 y SW-2139 (.2) está registrado. Falta agregar R-2139 (.1) y comprobar autenticación. La existencia de los grupos no demuestra todavía sus miembros o las políticas aplicadas. [Diagnóstico y siguientes pasos](docs/RADIUS.md).
+IAS está activo en 10.21.39.10/24 y SW-2139 (.2) está registrado. Falta agregar R-2139 (.1) y comprobar autenticación. Las nuevas capturas también muestran a usuario-n5 en RED-NIVEL-5 y las políticas LAB2139-Nivel10/5/0 habilitadas con shell:priv-lvl 10/5/0; falta verificar cuál se aplica durante una autenticación. [Diagnóstico y siguientes pasos](docs/RADIUS.md).
+
+![Políticas LAB2139 de niveles 10 y 5](imagenes/parcial/NPS-politicas-10-5.png)
+
+![Políticas LAB2139 de niveles 5 y 0 y cuenta usuario-n5 en RED-NIVEL-5](imagenes/parcial/NPS-politicas-5-0-usuario-n5.png)
 
 ### Active Directory y NPS — antecedente /29
 

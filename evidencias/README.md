@@ -34,3 +34,12 @@ Ambas capturas fueron aportadas por el autor; no se alteraron sus resultados.
 ## NPS y AD del parcial
 
 [Captura actual de NPS](../imagenes/parcial/NPS-servicio-IP-clientes-grupos.png): IAS Running, IP 10.21.39.10/24, existencia de grupos RED-NIVEL-0/5/10 y listado de clientes. SW-2139 .2 está habilitado; R1 .129 y SW1 .130 corresponden al direccionamiento anterior. R-2139 .1 no aparece en esa consulta. No contiene secretos ni un evento de autenticación actual.
+
+## Políticas actuales y cuenta de prueba
+
+- [LAB2139 niveles 10 y 5](../imagenes/parcial/NPS-politicas-10-5.png): políticas habilitadas con atributos de privilegio.
+- [LAB2139 niveles 5 y 0 y miembro de grupo](../imagenes/parcial/NPS-politicas-5-0-usuario-n5.png): usuario-n5 en RED-NIVEL-5.
+- [Políticas AAA_Cisco anteriores](../imagenes/parcial/NPS-politicas-AAA-anteriores.png): siguen presentes en órdenes 1–3.
+- [Listado de clientes previo al alta del router](../imagenes/parcial/NPS-clientes-antes-alta-router.png): no aparece todavía R-2139 .1.
+
+Las capturas no son eventos de autenticación. No se atribuye una política efectiva o una aceptación al router sin la prueba correspondiente.
