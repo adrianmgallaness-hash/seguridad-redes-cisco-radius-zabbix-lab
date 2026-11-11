@@ -1,4 +1,4 @@
-**Video demostrativo:** enlace aún no proporcionado.
+**Video demostrativo:** [Ver el segundo parcial de Seguridad de Redes en YouTube](https://youtu.be/cIgDrLqfHaw)
 
 # Segundo Parcial — Seguridad de Redes
 **Adrian Magallanes · Matrícula 2025-2139**  
