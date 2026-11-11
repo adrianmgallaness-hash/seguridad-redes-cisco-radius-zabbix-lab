@@ -9,3 +9,5 @@
 No se modificaron las imágenes originales ni sus resultados.
 
 Las imágenes `parcial/port-security-violacion-Gi0-3.png` y `parcial/port-security-recuperacion-Gi0-3.png` documentan el bloqueo real y la recuperación de Gi0/3; están incrustadas en el README principal.
+
+`parcial/NPS-servicio-IP-clientes-grupos.png` muestra el estado actual de IAS, la IP del servidor, los clientes registrados y los grupos AD del parcial; está incrustada en el README principal.

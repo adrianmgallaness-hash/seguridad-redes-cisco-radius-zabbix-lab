@@ -30,3 +30,7 @@ La nueva exportación del router sigue mostrando `no aaa new-model`. La respuest
 - [Transcripción de recuperación](parcial/port-security-recuperacion-Gi0-3.txt): enlace y protocolo de línea up, una MAC aprendida.
 
 Ambas capturas fueron aportadas por el autor; no se alteraron sus resultados.
+
+## NPS y AD del parcial
+
+[Captura actual de NPS](../imagenes/parcial/NPS-servicio-IP-clientes-grupos.png): IAS Running, IP 10.21.39.10/24, existencia de grupos RED-NIVEL-0/5/10 y listado de clientes. SW-2139 .2 está habilitado; R1 .129 y SW1 .130 corresponden al direccionamiento anterior. R-2139 .1 no aparece en esa consulta. No contiene secretos ni un evento de autenticación actual.

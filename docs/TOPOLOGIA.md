@@ -25,7 +25,8 @@ Los nombres de esta captura son las etiquetas de los nodos GNS3. Se conservan si
 | Gestión SW-2139 | Vlan10 10.21.39.2/24, gateway 10.21.39.1; confirmado por running-config |
 | Otro vecino ARP | .131; función no confirmada |
 | SW-2139 | Gi0/0 hacia router; Gi0/1 Windows AD/NPS; Gi0/2 PC; Gi0/3 Ubuntu/Zabbix; puertos access en VLAN 10 |
-| Destino RADIUS del switch | NPS-2139, 10.21.39.10, UDP 1812/1813; pendiente verificar servicio y autenticación |
+| Servidor NPS actual | 10.21.39.10/24, interfaz Ethernet0 2; IAS Running confirmado por captura |
+| Destino RADIUS del switch | NPS-2139, 10.21.39.10, UDP 1812/1813; falta verificar autenticación |
 
 El pool DHCP anuncia DNS .10; no se dispone de una prueba de resolución que confirme ese servicio. La fecha de vencimiento de concesiones mostrada por IOS pertenece a 2002: documenta el reloj del equipo, no la fecha de ejecución del parcial.
 

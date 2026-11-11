@@ -16,7 +16,7 @@ Laboratorio desarrollado en GNS3 y VMware. Reúne la configuración exportada de
 | Capturas y transcripciones | [Evidencias](evidencias/README.md) |
 | Análisis estático de hardening | [Informe generado](reportes/informe-cis-R-2139.md) |
 | Herramienta y reproducción | [Scripts](scripts/README.md) |
-| AD, NPS y RADIUS | [Antecedente AAA](antecedentes/AAA/README.md) |
+| AD, NPS y RADIUS | [Estado del parcial y preparación](docs/RADIUS.md) |
 | Monitoreo SNMP del parcial | [Evidencias de R-2139 y SW-2139](docs/ZABBIX.md) |
 | Metodología de auditoría | [Alcance e informe inicial](docs/AUDITORIA.md) |
 
@@ -47,7 +47,8 @@ El diagrama representa la LAN lógica; la salida disponible no identifica todos 
 - Switch: port-security activo en Gi0/1–Gi0/3, máximo **2 MAC**, acción **shutdown**. La prueba posterior en **Gi0/3** registró **1 violación**, estado **Secure-shutdown / err-disabled** y el evento PSECURE_VIOLATION. [Evidencia de consola](evidencias/parcial/port-security-violacion-Gi0-3.txt).
 - Hardening: script ejecutado sobre la copia sanitizada de IOS 12.4; identifica controles presentes y hallazgos, sin conectarse ni modificar el router.
 - Zabbix: las nuevas capturas muestran CPU, memoria y tráfico de R-2139, y tráfico y estado de interfaces de SW-2139.
-- AAA: SW-2139 tiene RADIUS configurado en SSH con NPS 10.21.39.10; falta acreditar una autenticación actual. El router aún tiene AAA deshabilitado. Las capturas NPS anteriores se mantienen como antecedentes.
+- AD/NPS: la nueva captura confirma IAS en Running, servidor 10.21.39.10/24, grupos RED-NIVEL-0/5/10 y cliente SW-2139 (.2) habilitado. El listado aún no incluye el router actual (.1).
+- AAA: SW-2139 tiene RADIUS configurado en SSH; falta acreditar una autenticación actual. El router aún tiene AAA deshabilitado. Los eventos NPS de la práctica anterior se conservan como antecedentes.
 
 La violación de port-security está acreditada mediante la salida real de SW-2139, aportada por el autor tras el ensayo en Gi0/3. Las capturas anteriores con contador cero se conservan como estado previo. La recuperación también está acreditada: Gi0/3 regresó a Secure-up / connected, con una MAC aprendida y conservando el contador de 1 violación.
 
@@ -96,6 +97,12 @@ Security Violation Count   : 1
 ![Gi0/3 recuperado: Secure-up y connected; contador de violaciones 1](imagenes/parcial/port-security-recuperacion-Gi0-3.png)
 
 [Salida completa y registros de violación](evidencias/parcial/port-security-violacion-Gi0-3.txt) · [Salida de recuperación](evidencias/parcial/port-security-recuperacion-Gi0-3.txt) · [Procedimiento y recuperación](docs/PRUEBA-PORT-SECURITY.md)
+
+### Active Directory y NPS — estado actual del parcial
+
+![NPS activo, IP del servidor, clientes registrados y grupos actuales](imagenes/parcial/NPS-servicio-IP-clientes-grupos.png)
+
+IAS está activo en 10.21.39.10/24 y SW-2139 (.2) está registrado. Falta agregar R-2139 (.1) y comprobar autenticación. La existencia de los grupos no demuestra todavía sus miembros o las políticas aplicadas. [Diagnóstico y siguientes pasos](docs/RADIUS.md).
 
 ### Active Directory y NPS — antecedente /29
 
