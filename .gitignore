@@ -1,0 +1,10 @@
+respaldos/
+privado/
+*.private.*
+*.pfx
+*.p12
+*.pem
+.env
+__pycache__/
+*.pyc
+router_running_config.txt

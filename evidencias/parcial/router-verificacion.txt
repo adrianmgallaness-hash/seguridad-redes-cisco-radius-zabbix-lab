@@ -1,0 +1,26 @@
+R-2139#
+R-2139#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.21.39.1              -   c002.0a47.0000  ARPA   FastEthernet0/0
+Internet  10.21.39.2              1   0cfe.c16a.800a  ARPA   FastEthernet0/0
+Internet  10.21.39.100            0   000c.299c.b1f5  ARPA   FastEthernet0/0
+Internet  10.21.39.101            0   000c.29b0.387b  ARPA   FastEthernet0/0
+Internet  10.21.39.131            2   000c.2989.91c0  ARPA   FastEthernet0/0
+R-2139#
+R-2139#show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address          Client-ID/              Lease expiration        Type
+                    Hardware address/
+                    User name
+10.21.39.100        0100.0c29.9cb1.f5       Mar 02 2002 12:17 AM    Automatic
+10.21.39.101        0100.0c29.b038.7b       Mar 02 2002 12:17 AM    Automatic
+R-2139#show ip dhcp conflict
+IP address        Detection method   Detection time          VRF
+R-2139#
+R-2139#show ip ssh
+SSH Enabled - version 2.0
+Authentication timeout: 60 secs; Authentication retries: 3
+R-2139#show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            10.21.39.1      YES manual up                    up  
+FastEthernet0/1            unassigned      YES unset  administratively down down

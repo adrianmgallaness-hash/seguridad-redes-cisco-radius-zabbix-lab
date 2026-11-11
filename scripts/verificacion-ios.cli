@@ -1,0 +1,17 @@
+! Consultas del router; no cambian configuracion
+show clock
+show ip interface brief
+show arp
+show ip dhcp binding
+show ip dhcp conflict
+show ip ssh
+show users
+show privilege
+! Consultas del switch
+show clock
+show vlan brief
+show interfaces status
+show port-security
+show port-security interface GigabitEthernet0/1
+show port-security address
+! Revisar y ocultar datos sensibles de cualquier salida antes de publicarla.
