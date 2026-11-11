@@ -49,7 +49,7 @@ El diagrama representa la LAN lógica; la salida disponible no identifica todos 
 - Zabbix: las nuevas capturas muestran CPU, memoria y tráfico de R-2139, y tráfico y estado de interfaces de SW-2139.
 - AAA: SW-2139 tiene RADIUS configurado en SSH con NPS 10.21.39.10; falta acreditar una autenticación actual. El router aún tiene AAA deshabilitado. Las capturas NPS anteriores se mantienen como antecedentes.
 
-La violación de port-security está acreditada mediante la salida real de SW-2139, aportada por el autor tras el ensayo en Gi0/3. Las capturas anteriores con contador cero se conservan como estado previo. La recuperación del puerto se documentará cuando se reciba su salida posterior.
+La violación de port-security está acreditada mediante la salida real de SW-2139, aportada por el autor tras el ensayo en Gi0/3. Las capturas anteriores con contador cero se conservan como estado previo. La recuperación también está acreditada: Gi0/3 regresó a Secure-up / connected, con una MAC aprendida y conservando el contador de 1 violación.
 
 ## Estructura
 
@@ -89,7 +89,13 @@ Last Source Address:Vlan   : 0221.3900.0002:10
 Security Violation Count   : 1
 ```
 
-[Salida completa y registros de violación](evidencias/parcial/port-security-violacion-Gi0-3.txt) · [Procedimiento y recuperación](docs/PRUEBA-PORT-SECURITY.md)
+![Violación real de port-security en Gi0/3: contador 1 y err-disabled](imagenes/parcial/port-security-violacion-Gi0-3.png)
+
+**Recuperación del puerto:**
+
+![Gi0/3 recuperado: Secure-up y connected; contador de violaciones 1](imagenes/parcial/port-security-recuperacion-Gi0-3.png)
+
+[Salida completa y registros de violación](evidencias/parcial/port-security-violacion-Gi0-3.txt) · [Salida de recuperación](evidencias/parcial/port-security-recuperacion-Gi0-3.txt) · [Procedimiento y recuperación](docs/PRUEBA-PORT-SECURITY.md)
 
 ### Active Directory y NPS — antecedente /29
 

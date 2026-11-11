@@ -19,6 +19,14 @@ Las capturas AD/NPS y las capturas Zabbix anteriores se conservan como anteceden
 
 - [Conectividad y DHCP del router](parcial/router-conectividad-dhcp.txt): fragmento textual de la nueva salida, con pings exitosos a .2 y .10 y dos concesiones DHCP. Se omitieron intentos con errores de sintaxis; no se cambian los resultados.
 - [Port-security antes del ensayo](parcial/port-security-verificacion.txt): transcripción de consultas, contador cero y sin coincidencias en el filtro de logs.
-- [Violación real en Gi0/3](parcial/port-security-violacion-Gi0-3.txt): transcripción posterior aportada por el autor; contador 1, Secure-shutdown/err-disabled, MAC 0221.3900.0002 y registros PSECURE_VIOLATION/ERR_DISABLE. Esta salida sí acredita la violación. La recuperación se añadirá al recibir su evidencia.
+- [Violación real en Gi0/3](parcial/port-security-violacion-Gi0-3.txt): transcripción posterior aportada por el autor; contador 1, Secure-shutdown/err-disabled, MAC 0221.3900.0002 y registros PSECURE_VIOLATION/ERR_DISABLE. Esta salida sí acredita la violación. La recuperación está acreditada en la nueva salida y captura.
 
 La nueva exportación del router sigue mostrando `no aaa new-model`. La respuesta ICMP de .10 no confirma por sí sola que sea el servidor NPS.
+
+## Capturas de violación y recuperación
+
+- [Bloqueo de Gi0/3](../imagenes/parcial/port-security-violacion-Gi0-3.png): máximo 2, contador 1, Secure-shutdown y err-disabled; incluye registros.
+- [Recuperación de Gi0/3](../imagenes/parcial/port-security-recuperacion-Gi0-3.png): Secure-up / connected y contador 1.
+- [Transcripción de recuperación](parcial/port-security-recuperacion-Gi0-3.txt): enlace y protocolo de línea up, una MAC aprendida.
+
+Ambas capturas fueron aportadas por el autor; no se alteraron sus resultados.

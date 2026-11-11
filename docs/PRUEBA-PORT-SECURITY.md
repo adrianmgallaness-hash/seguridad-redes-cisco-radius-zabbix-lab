@@ -1,6 +1,6 @@
 # Prueba real de violación de port-security en Gi0/3
 
-**Estado: violación acreditada.** La salida de consola posterior al ensayo fue aportada por el autor y se conserva como [transcripción original](../evidencias/parcial/port-security-violacion-Gi0-3.txt). La recuperación todavía no está acreditada.
+**Estado: violación acreditada.** La salida de consola posterior al ensayo fue aportada por el autor y se conserva como [transcripción original](../evidencias/parcial/port-security-violacion-Gi0-3.txt). La recuperación también está acreditada mediante [captura](../imagenes/parcial/port-security-recuperacion-Gi0-3.png) y [transcripción](../evidencias/parcial/port-security-recuperacion-Gi0-3.txt).
 
 ## Puerto e interfaz identificados
 
@@ -41,7 +41,7 @@ show interfaces GigabitEthernet0/3 status
 show logging | include PSECURE|ERR_DISABLE
 ```
 
-## Recuperación indicada; pendiente de evidencia
+## Recuperación acreditada
 
 Después de terminar el generador y guardar las consultas anteriores, ejecutar desde la consola GNS3 de SW-2139:
 
@@ -55,6 +55,12 @@ show port-security interface GigabitEthernet0/3
 show interfaces GigabitEthernet0/3 status
 ```
 
-En Linux comprobar conectividad mediante `ping -c 4 10.21.39.1`. Publicar la salida posterior cuando se reciba, sin asumir que la recuperación ya ocurrió.
+La salida posterior muestra Gi0/3 en **Secure-up / connected**, una MAC aprendida (000c.299c.b1f5), máximo 2 y contador de violaciones 1. Los registros muestran enlace y protocolo de línea nuevamente up. El contador conserva el incidente y no indica una nueva violación activa.
+
+![Violación en Gi0/3](../imagenes/parcial/port-security-violacion-Gi0-3.png)
+
+![Puerto recuperado](../imagenes/parcial/port-security-recuperacion-Gi0-3.png)
+
+La transcripción separa en líneas el mensaje de subida del enlace y el comando que quedó pegado a continuación en la consola; los valores se conservan. No se aportó todavía un ping posterior desde Linux: la recuperación acreditada aquí corresponde al puerto del switch.
 
 Referencia: [Cisco: port-security y recuperación manual](https://www.cisco.com/c/en/us/support/docs/switches/catalyst-3750-series-switches/72846-layer2-secftrs-catl3fixed.html).

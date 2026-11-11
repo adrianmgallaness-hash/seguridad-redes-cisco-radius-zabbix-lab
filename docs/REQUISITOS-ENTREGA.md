@@ -11,4 +11,4 @@
 
 Los antecedentes AAA y las primeras capturas Zabbix usan otra red; las nuevas capturas del parcial están identificadas en docs/ZABBIX.md. Sigue pendiente acreditar RADIUS en el entorno actual. No se presenta el repositorio como una entrega con todos los requisitos verificados mientras falten esos materiales.
 
-La violación de port-security en Gi0/3 ya está acreditada mediante [salida de consola](../evidencias/parcial/port-security-violacion-Gi0-3.txt): contador 1, Secure-shutdown/err-disabled y registros. Falta una captura de pantalla de ese resultado si se exige evidencia visual incrustada de cada prueba.
+La violación de port-security en Gi0/3 ya está acreditada mediante [salida de consola](../evidencias/parcial/port-security-violacion-Gi0-3.txt): contador 1, Secure-shutdown/err-disabled y registros. Ya se incorporaron al README las capturas de [bloqueo](../imagenes/parcial/port-security-violacion-Gi0-3.png) y [recuperación](../imagenes/parcial/port-security-recuperacion-Gi0-3.png).
