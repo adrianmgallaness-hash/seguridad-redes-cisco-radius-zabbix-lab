@@ -1,1 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="430" viewBox="0 0 1100 430"><rect width="1100" height="430" fill="#0b1423"/><g font-family="Arial,sans-serif" text-anchor="middle"><text x="550" y="42" fill="#ffffff" font-size="26">Seguridad de Redes · Segundo Parcial</text><text x="550" y="76" fill="#a5b4cc" font-size="17">LAN lógica observada · 10.21.39.0/24</text><g stroke="#5eead4" stroke-width="4"><path d="M300 220H475M685 220H830M580 265V320"/></g><g fill="#172b43" stroke="#6fa9d8" stroke-width="2"><rect x="60" y="165" width="240" height="110" rx="16"/><rect x="475" y="165" width="210" height="110" rx="16"/><rect x="830" y="165" width="240" height="110" rx="16"/><rect x="415" y="320" width="330" height="70" rx="16"/></g><g fill="white" font-size="21"><text x="180" y="198">R-2139</text><text x="580" y="198">SW-2139</text><text x="950" y="198">Clientes DHCP</text></g><g fill="#c9d7e8" font-size="16"><text x="180" y="227">Fa0/0 · 10.21.39.1/24</text><text x="180" y="253">IOS 12.4 · SSHv2 · SNMP RO</text><text x="580" y="227">VLAN 10 observada</text><text x="580" y="253">Port-security · máximo 2 MAC</text><text x="950" y="233">10.21.39.100 / .101</text><text x="580" y="349">ARP: .2 y .131</text><text x="580" y="375">Función de estos hosts no confirmada</text></g><text x="550" y="418" fill="#a5b4cc" font-size="14">Diagrama lógico derivado de salidas; los enlaces físicos completos no están documentados.</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="470" viewBox="0 0 1100 470">
+  <rect width="1100" height="470" fill="#0b1423"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="550" y="36" fill="#ffffff" font-size="26">Seguridad de Redes · Segundo Parcial</text>
+    <text x="550" y="65" fill="#a5b4cc" font-size="17">Topología del laboratorio · VLAN 10 · 10.21.39.0/24</text>
+    <g stroke="#5eead4" stroke-width="4" fill="none">
+      <path d="M550 155V205"/>
+      <path d="M490 290L195 345"/>
+      <path d="M550 290V345"/>
+      <path d="M610 290L905 345"/>
+    </g>
+    <g fill="#172b43" stroke="#6fa9d8" stroke-width="2">
+      <rect x="405" y="85" width="290" height="70" rx="14"/>
+      <rect x="405" y="205" width="290" height="85" rx="14"/>
+      <rect x="35" y="345" width="320" height="90" rx="14"/>
+      <rect x="390" y="345" width="320" height="90" rx="14"/>
+      <rect x="745" y="345" width="320" height="90" rx="14"/>
+    </g>
+    <g fill="#ffffff" font-size="21">
+      <text x="550" y="113">R-2139</text>
+      <text x="550" y="237">SW-2139</text>
+      <text x="195" y="379">Windows AD/NPS</text>
+      <text x="550" y="379">PC-USUARIOS-1</text>
+      <text x="905" y="379">Zabbix</text>
+    </g>
+    <g fill="#c9d7e8" font-size="16">
+      <text x="550" y="139">Fa0/0 · 10.21.39.1/24</text>
+      <text x="550" y="269">Gi0/0 al router · Vlan10 10.21.39.2/24</text>
+      <text x="195" y="407">Gi0/1 · 10.21.39.10/24</text>
+      <text x="550" y="407">Gi0/2 · DHCP .101 en prueba SSH</text>
+      <text x="905" y="407">Gi0/3 · IP no verificada</text>
+    </g>
+    <text x="550" y="462" fill="#a5b4cc" font-size="14">Enlaces según captura GNS3 y descripciones de interfaces; las IP no verificadas no se infieren.</text>
+  </g>
+</svg>

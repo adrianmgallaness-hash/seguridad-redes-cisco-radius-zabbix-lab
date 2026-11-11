@@ -4,7 +4,7 @@
 **Adrian Magallanes · Matrícula 2025-2139**  
 Cisco IOS · Active Directory / NPS / RADIUS · DHCP · SSH · Port-security · Zabbix / SNMP · Revisión de hardening
 
-Laboratorio desarrollado en GNS3 y VMware. Reúne la configuración exportada del router **R-2139**, las salidas originales disponibles del parcial, las capturas del monitoreo de R-2139 y SW-2139, y antecedentes de prácticas de AAA y monitoreo.
+Laboratorio desarrollado en GNS3 y VMware. Reúne las configuraciones exportadas del router **R-2139** y el switch **SW-2139**, las salidas originales disponibles del parcial, las capturas del monitoreo de ambos equipos y antecedentes de prácticas de AAA y monitoreo.
 
 ## Recorrido de la entrega
 
@@ -31,13 +31,14 @@ Captura original aportada por el autor. En GNS3, los nodos aparecen como **R2**,
 ![Diagrama de la LAN del parcial](imagenes/topologia.svg)
 
 ```mermaid
-flowchart LR
-  R["R-2139 · Fa0/0 · 10.21.39.1/24"] --- S["SW-2139 · VLAN 10 observada"]
-  S --- C["Clientes DHCP · .100 y .101"]
-  S --- W["Host observado en ARP · .131"]
+flowchart TB
+  R["R-2139 · Fa0/0 · 10.21.39.1/24"] ---|"Fa0/0 ↔ Gi0/0"| S["SW-2139 · VLAN 10 · 10.21.39.2/24"]
+  S ---|"Gi0/1"| W["Windows AD/NPS · 10.21.39.10/24"]
+  S ---|"Gi0/2"| C["PC-USUARIOS-1 · DHCP .101 durante la prueba"]
+  S ---|"Gi0/3"| Z["Zabbix · IP no verificada"]
 ```
 
-El diagrama representa la LAN lógica; la salida disponible no identifica todos los enlaces físicos ni el papel del host .131. El running-config recibido de SW-2139 confirma Vlan10 con dirección de gestión 10.21.39.2/24.
+Los enlaces se identifican en la captura GNS3 y en las descripciones de interfaces del switch. La IP del equipo Zabbix no se deduce de la captura; el vecino ARP .131 permanece sin función confirmada.
 
 ## Resultados documentados
 
@@ -106,7 +107,7 @@ Security Violation Count   : 1
 
 ![NPS activo, IP del servidor, clientes registrados y grupos actuales](imagenes/parcial/NPS-servicio-IP-clientes-grupos.png)
 
-IAS está activo en 10.21.39.10/24 y SW-2139 (.2) está registrado. R-2139 (.1) ya fue agregado y aparece habilitado; falta comprobar autenticación. Las nuevas capturas también muestran a usuario-n5 en RED-NIVEL-5 y las políticas LAB2139-Nivel10/5/0 habilitadas con shell:priv-lvl 10/5/0; falta verificar cuál se aplica durante una autenticación. [Diagnóstico y siguientes pasos](docs/RADIUS.md).
+IAS está activo en 10.21.39.10/24 y SW-2139 (.2) está registrado. R-2139 (.1) también fue agregado y su autenticación quedó acreditada mediante una sesión SSH y el evento NPS 6272. Las nuevas capturas muestran a usuario-n5 en RED-NIVEL-5 y las políticas LAB2139-Nivel10/5/0 habilitadas con shell:priv-lvl 10/5/0. En la sesión probada se aplicó LAB2139-Nivel5; los niveles 0 y 10 no se han probado en este entorno. [Detalle de RADIUS](docs/RADIUS.md).
 
 ![Políticas LAB2139 de niveles 10 y 5](imagenes/parcial/NPS-politicas-10-5.png)
 
