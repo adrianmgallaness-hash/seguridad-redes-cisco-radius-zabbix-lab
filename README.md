@@ -21,6 +21,12 @@ Laboratorio desarrollado en GNS3 y VMware. Reúne la configuración exportada de
 
 ## Topología del parcial
 
+![Topología del laboratorio en GNS3](imagenes/topologia-gns3.png)
+
+Captura original aportada por el autor. En GNS3, los nodos aparecen como **R2**, **SW-MultiCapa**, **Windows-srv**, **PC-USUARIOS-1** y **ZABBIX**; estas etiquetas visuales se conservan tal como aparecen.
+
+### Diagrama lógico y direccionamiento
+
 ![Diagrama de la LAN del parcial](imagenes/topologia.svg)
 
 ```mermaid

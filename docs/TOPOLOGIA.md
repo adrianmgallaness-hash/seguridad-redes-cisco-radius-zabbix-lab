@@ -1,5 +1,18 @@
 # Diseño y direccionamiento
 
+## Topología en GNS3
+
+![Captura original de la topología](../imagenes/topologia-gns3.png)
+
+| Enlace mostrado | Interfaces |
+|---|---|
+| R2 — SW-MultiCapa | f0/0 — Gi0/0 |
+| SW-MultiCapa — Windows-srv | Gi0/1 — e0 |
+| SW-MultiCapa — PC-USUARIOS-1 | Gi0/2 — e0 |
+| SW-MultiCapa — ZABBIX | Gi0/3 — e0 |
+
+Los nombres de esta captura son las etiquetas de los nodos GNS3. Se conservan sin sustituirlas por los hostnames IOS de los archivos de configuración. La imagen muestra los enlaces, pero no asigna direcciones IP a los hosts.
+
 ## Parcial: red 10.21.39.0/24
 
 | Elemento | Dato sustentado |
