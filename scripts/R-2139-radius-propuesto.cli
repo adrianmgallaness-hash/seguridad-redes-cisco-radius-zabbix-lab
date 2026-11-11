@@ -1,0 +1,21 @@
+! PROPUESTA: todavia no es una exportacion del router ni prueba de aplicacion.
+! Aplicar desde consola GNS3, con usuario local admin2139 ya existente.
+! Sustituir <SECRETO_RADIUS> por el valor privado del cliente R-2139 en NPS.
+configure terminal
+aaa new-model
+aaa authentication login default local
+aaa authorization exec default local
+radius-server host 10.21.39.10 auth-port 1812 acct-port 1813 key <SECRETO_RADIUS>
+ip radius source-interface FastEthernet0/0
+aaa authentication login LAB_RADIUS group radius local
+aaa authorization exec LAB_EXEC group radius local
+line con 0
+ login authentication default
+line aux 0
+ login authentication default
+line vty 0 4
+ login authentication LAB_RADIUS
+ authorization exec LAB_EXEC
+ transport input ssh
+end
+! Probar una nueva sesion SSH antes de guardar.

@@ -43,3 +43,7 @@ Ambas capturas fueron aportadas por el autor; no se alteraron sus resultados.
 - [Listado de clientes previo al alta del router](../imagenes/parcial/NPS-clientes-antes-alta-router.png): no aparece todavía R-2139 .1.
 
 Las capturas no son eventos de autenticación. No se atribuye una política efectiva o una aceptación al router sin la prueba correspondiente.
+
+## Router registrado en NPS
+
+[Captura del alta de R-2139](../imagenes/parcial/NPS-R-2139-registrado.png): dirección 10.21.39.1, Enabled True, después del alta y reinicio de IAS. La entrada del secreto está enmascarada. La captura acredita el registro del cliente, no todavía una autenticación aceptada desde el router.
